@@ -38,7 +38,7 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="min-h-screen mt-20">
+    <div className="mt-24">
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row gap-10">
         {/* leftside */}
         <div className="flex-1 md:mt-20">
