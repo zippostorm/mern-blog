@@ -48,7 +48,7 @@ const SignIn = () => {
     }
   };
   return (
-    <div className="mt-24">
+    <div className="mt-24 mx-auto w-full">
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row gap-10">
         {/* leftside */}
         <div className="flex-1 md:mt-20">
