@@ -41,7 +41,6 @@ const DashProfile = () => {
 
   const uploadImage = async () => {
     try {
-      setImageFileUploading(true);
       const fileId = "unique()"; // Генерация уникального ID для файла
 
       // Создаем FormData для загрузки файла
@@ -58,6 +57,7 @@ const DashProfile = () => {
       xhr.setRequestHeader("x-appwrite-project", projectId); // Замените на ID вашего проекта
 
       xhr.upload.onprogress = (event) => {
+        setImageFileUploading(true);
         setImageFileUploadError(null);
         if (event.lengthComputable) {
           const percentage = Math.round((event.loaded / event.total) * 100);
@@ -103,12 +103,12 @@ const DashProfile = () => {
     e.preventDefault();
     setUpdateUserError(null);
     setUpdateUserSuccess(null);
-    if (Object.keys(dataForm).length === 0) {
-      setUpdateUserError("No changes made");
+    if (imageFileUploading === true) {
+      setUpdateUserError("Please wait for image to upload");
       return;
     }
-    if (imageFileUploading) {
-      setUpdateUserError("Please wait for image to upload");
+    if (Object.keys(dataForm).length === 0) {
+      setUpdateUserError("No changes made");
       return;
     }
     try {
@@ -128,7 +128,8 @@ const DashProfile = () => {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("User's profile updated successfully");
         setUpdateUserError(null);
-        setDataForm(0);
+        setDataForm({});
+        setImageFileUploadProgress(null);
       }
     } catch (error) {
       dispatch(updateFailure(error.message));
