@@ -5,13 +5,42 @@ import "react-quill/dist/quill.snow.css";
 import { bucketId, projectId } from "../appwrite";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
+  const navigate = useNavigate();
+
   const [file, setFile] = useState(null);
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [imageFileUploadError, setImageFileUploadError] = useState(null);
   const [imageFileUploadProgress, setImageFileUploadProgress] = useState(0);
   const [imageFileUrl, setImageFileUrl] = useState(null);
+  const [dataForm, setDataForm] = useState({});
+  const [publishError, setPublishError] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch("/api/post/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataForm),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        setPublishError(data.message);
+        return;
+      }
+      if (res.ok) {
+        setPublishError(null);
+        navigate(`/post/${data.slug}`);
+      }
+    } catch (error) {
+      setPublishError("Something went wrong!");
+    }
+  };
 
   const handleUploadImage = async () => {
     try {
@@ -52,6 +81,7 @@ const CreatePost = () => {
             const fileUrl = `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${imageId}/view?project=${projectId}`;
             setImageFileUrl(fileUrl);
             setImageFileUploading(false);
+            setDataForm({ ...dataForm, image: fileUrl });
           } else if (xhr.status === 400) {
             setImageFileUploadError("Upload failed: image have more than 10mb");
             setImageFileUploadProgress(null);
@@ -78,7 +108,7 @@ const CreatePost = () => {
   return (
     <div className="p-3 max-w-3xl mx-auto">
       <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
-      <form className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 sm:flex-row justify-between">
           <TextInput
             type="text"
@@ -86,8 +116,15 @@ const CreatePost = () => {
             required
             id="title"
             className="flex-1"
+            onChange={(e) => {
+              setDataForm({ ...dataForm, title: e.target.value });
+            }}
           />
-          <Select>
+          <Select
+            onChange={(e) => {
+              setDataForm({ ...dataForm, category: e.target.value });
+            }}
+          >
             <option value="uncategorized">Select a category</option>
             <option value="javascript">JavaScript</option>
             <option value="reactjs">React.js</option>
@@ -136,10 +173,18 @@ const CreatePost = () => {
           placeholder="Write somethink..."
           className="h-72 mb-12"
           required
+          onChange={(value) => {
+            setDataForm({ ...dataForm, content: value });
+          }}
         />
         <Button type="submit" gradientDuoTone="purpleToPink">
           Publish
         </Button>
+        {publishError && (
+          <Alert className="mt-5" color="failure">
+            {publishError}
+          </Alert>
+        )}
       </form>
     </div>
   );
