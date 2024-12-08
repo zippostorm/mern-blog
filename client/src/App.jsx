@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -11,8 +11,41 @@ import FooterCom from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import CreatePost from "./pages/CreatePost";
+import { useDispatch, useSelector } from "react-redux";
+import { signoutSuccess } from "./redux/user/userSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    verifyToken();
+  });
+
+  const verifyToken = async () => {
+    if (currentUser) {
+      try {
+        const response = await fetch("/api/auth/verify", {
+          method: "GET",
+          credentials: "include", // Отправляем куки
+        });
+
+        if (!response.ok) {
+          console.log("Unauthorized");
+          dispatch(signoutSuccess());
+        }
+
+        const data = await response.json();
+      } catch (error) {
+        console.log("Token verification failed:", error.message);
+        // Разлогиниваем пользователя при невалидном токене
+        if (currentUser) {
+          dispatch(signoutSuccess());
+        }
+      }
+    }
+  };
+
   return (
     <BrowserRouter>
       <div className="flex flex-col min-h-screen">

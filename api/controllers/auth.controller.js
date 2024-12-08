@@ -131,3 +131,20 @@ export const google = async (req, res, next) => {
     next(error);
   }
 };
+
+export const verifyAuth = (req, res) => {
+  const token = req.cookies.access_token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    // Токен валиден, возвращаем успех
+    res.status(200).json({ valid: true, user });
+  });
+};
