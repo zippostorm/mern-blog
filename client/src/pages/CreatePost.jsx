@@ -181,7 +181,7 @@ const CreatePost = () => {
     }
   };
   return (
-    <div className="p-3 max-w-4xl mx-auto">
+    <div className="p-3 w-[850px] mx-auto">
       <h1 className="text-center text-3xl my-7 font-semibold">Create a post</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 sm:flex-row justify-between">

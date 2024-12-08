@@ -51,7 +51,7 @@ const App = () => {
       <div className="flex flex-col min-h-screen">
         <Header />
         {/* Контейнер для Routes повинен займати весь доступний простір */}
-        <div className="flex-grow">
+        <div className="flex-grow flex">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
