@@ -13,6 +13,7 @@ const CreatePost = () => {
   const filePickerRef = useRef();
   const quillRef = useRef(null);
 
+  const [cursorPosition, setCursorPosition] = useState(null);
   const [file, setFile] = useState(null);
   const [imageFileForma, setImageFileForma] = useState(null);
   const [imageFileUploading, setImageFileUploading] = useState(false);
@@ -70,8 +71,8 @@ const CreatePost = () => {
           setImageFileFormaUrl(fileUrl);
           setImageFileFormaUploading(false);
           const quill = quillRef.current.getEditor();
-          const range = quill.getSelection();
-          quill.insertEmbed(range ? range.index : 0, "image", fileUrl);
+          const position = cursorPosition || 0;
+          quill.insertEmbed(position, "image", fileUrl);
         } else if (xhr.status === 400) {
           setImageFileFormaUploadError(
             "Upload failed: image have more than 10mb"
@@ -278,6 +279,9 @@ const CreatePost = () => {
             required
             onChange={(value) => {
               setDataForm({ ...dataForm, content: value });
+            }}
+            onChangeSelection={(range) => {
+              if (range) setCursorPosition(range.index); // Сохраняем текущую позицию курсора
             }}
           />
         </div>
