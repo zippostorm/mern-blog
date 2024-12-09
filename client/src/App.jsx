@@ -13,6 +13,7 @@ import OnlyAdminPrivateRoute from "./components/OnlyAdminPrivateRoute";
 import CreatePost from "./pages/CreatePost";
 import { useDispatch, useSelector } from "react-redux";
 import { signoutSuccess } from "./redux/user/userSlice";
+import UpdatePost from "./pages/UpdatePost";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const App = () => {
             </Route>
             <Route element={<OnlyAdminPrivateRoute />}>
               <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/update-post/:postId" element={<UpdatePost />} />
             </Route>
             <Route path="/projects" element={<Projects />} />
           </Routes>
