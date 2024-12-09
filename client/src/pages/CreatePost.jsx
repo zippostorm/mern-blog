@@ -264,7 +264,10 @@ const CreatePost = () => {
           ) : (
             <BiImageAdd
               className="mb-3 text-3xl ml-auto"
-              onClick={() => filePickerRef.current.click()}
+              onClick={() => {
+                filePickerRef.current.click(),
+                  (filePickerRef.current.value = null);
+              }}
             />
           )}
           <ReactQuill
