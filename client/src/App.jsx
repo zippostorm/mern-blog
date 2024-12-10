@@ -14,6 +14,7 @@ import CreatePost from "./pages/CreatePost";
 import { useDispatch, useSelector } from "react-redux";
 import { signoutSuccess } from "./redux/user/userSlice";
 import UpdatePost from "./pages/UpdatePost";
+import PostPage from "./pages/PostPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ const App = () => {
               <Route path="/update-post/:postId" element={<UpdatePost />} />
             </Route>
             <Route path="/projects" element={<Projects />} />
+            <Route path="/post/:postSlug" element={<PostPage />} />
           </Routes>
         </div>
         <FooterCom />
