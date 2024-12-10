@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { signoutSuccess } from "./redux/user/userSlice";
 import UpdatePost from "./pages/UpdatePost";
 import PostPage from "./pages/PostPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <div className="flex flex-col min-h-screen">
         <Header />
         {/* Контейнер для Routes повинен займати весь доступний простір */}
