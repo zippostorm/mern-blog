@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Comment from "./Comment";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
-const CommentSection = ({ postId }) => {
+const CommentSection = ({ postId, postSlug }) => {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -44,6 +44,7 @@ const CommentSection = ({ postId }) => {
         body: JSON.stringify({
           content: comment,
           postId,
+          postSlug,
           userId: currentUser._id,
         }),
       });

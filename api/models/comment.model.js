@@ -10,6 +10,10 @@ const commentSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    postSlug: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
       required: true,
