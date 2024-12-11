@@ -1,4 +1,4 @@
-import { Button, Modal, Table } from "flowbite-react";
+import { Button, Modal, Spinner, Table } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useSelector } from "react-redux";
@@ -6,7 +6,9 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 
 const DashUsers = () => {
   const { currentUser } = useSelector((state) => state.user);
+
   const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [userIdToDelete, setUserIdToDelete] = useState("");
@@ -14,15 +16,18 @@ const DashUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        setLoading(true);
         const res = await fetch(`/api/user/getusers`);
         const data = await res.json();
         if (res.ok) {
+          setLoading(false);
           setUsers(data.users);
           if (data.users.length < 9) {
             setShowMore(false);
           }
         }
       } catch (error) {
+        setLoading(false);
         console.log(error.message);
       }
     };
@@ -64,6 +69,13 @@ const DashUsers = () => {
       console.log(error.message);
     }
   };
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Spinner size="xl" />
+      </div>
+    );
 
   return (
     <div className="tabel-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">

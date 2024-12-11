@@ -1,4 +1,4 @@
-import { Button, Modal, Table } from "flowbite-react";
+import { Button, Modal, Spinner, Table } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useSelector } from "react-redux";
@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 
 const DashPosts = () => {
   const { currentUser } = useSelector((state) => state.user);
+
+  const [loading, setLoading] = useState(false);
   const [userPosts, setUserPosts] = useState([]);
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -14,15 +16,20 @@ const DashPosts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setLoading(true);
         const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
         const data = await res.json();
         if (res.ok) {
           setUserPosts(data.posts);
+          setLoading(false);
           if (data.posts.length < 9) {
             setShowMore(false);
           }
         }
-      } catch (error) {}
+      } catch (error) {
+        setLoading(false);
+        console.log(error.message);
+      }
     };
 
     if (currentUser.isAdmin) {
@@ -67,6 +74,13 @@ const DashPosts = () => {
       console.log(error);
     }
   };
+
+  if (loading)
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Spinner size="xl" />
+      </div>
+    );
 
   return (
     <div className="tabel-auto overflow-x-auto md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
