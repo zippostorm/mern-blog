@@ -73,6 +73,7 @@ const DashboardComponent = () => {
       fetchUsers();
     }
   }, [currentUser]);
+
   return (
     <div className="p-3 md:mx-auto">
       <div className="flex md:flex-row flex-wrap justify-center gap-10">
@@ -178,7 +179,9 @@ const DashboardComponent = () => {
                 <Table.Body key={comment._id} className="divide-y">
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell className="w-96">
-                      <p className="line-clamp-2">{comment.content}</p>
+                      <Link to={`/post/${comment.postSlug}`}>
+                        <p className="line-clamp-2">{comment.content}</p>
+                      </Link>
                     </Table.Cell>
                     <Table.Cell>{comment.numberOfLikes}</Table.Cell>
                   </Table.Row>
@@ -204,14 +207,20 @@ const DashboardComponent = () => {
                 <Table.Body key={post._id} className="divide-y">
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
                     <Table.Cell>
-                      <img
-                        src={post.image}
-                        alt={post.category}
-                        className="w-24 h-14 rounded-md bg-gray-500"
-                      />
+                      <Link to={`/post/${post.slug}`}>
+                        <img
+                          src={post.image}
+                          alt={post.category}
+                          className="w-24 h-14 rounded-md bg-gray-500"
+                        />
+                      </Link>
                     </Table.Cell>
-                    <Table.Cell className="w-96">{post.title}</Table.Cell>
-                    <Table.Cell className="w-5">{post.category}</Table.Cell>
+                    <Table.Cell className="w-96">
+                      <Link to={`/post/${post.slug}`}>{post.title}</Link>
+                    </Table.Cell>
+                    <Table.Cell className="w-5">
+                      <Link to={`/post/${post.slug}`}>{post.category}</Link>
+                    </Table.Cell>
                   </Table.Row>
                 </Table.Body>
               ))}
