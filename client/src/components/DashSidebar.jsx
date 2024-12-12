@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import {
   HiAnnotation,
   HiArrowSmRight,
+  HiChartPie,
   HiDocumentText,
   HiOutlineUserGroup,
   HiUser,
@@ -45,6 +46,16 @@ const DashSidebar = () => {
     <Sidebar className="w-full md:w-56">
       <Sidebar.Items>
         <Sidebar.ItemGroup className="flex flex-col gap-1">
+          {currentUser.isAdmin && (
+            <Sidebar.Item
+              as={Link}
+              to="/dashboard?tab=dash"
+              active={tab === "dash" || !tab}
+              icon={HiChartPie}
+            >
+              Dashboard
+            </Sidebar.Item>
+          )}
           <Sidebar.Item
             as={Link}
             to="/dashboard?tab=profile"

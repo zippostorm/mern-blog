@@ -2,7 +2,6 @@ import { Modal, Table, Button, Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
-import { FaCheck, FaTimes } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function DashComments() {
@@ -23,7 +22,6 @@ export default function DashComments() {
         if (res.ok) {
           setLoading(false);
           setComments(data.comments);
-          console.log(data.comments);
 
           if (data.comments.length < 9) {
             setShowMore(false);

@@ -77,11 +77,6 @@ const Header = () => {
               <Dropdown.Item>Profile</Dropdown.Item>
             </Link>
             {currentUser.isAdmin && (
-              <Link to={"/dashboard?tab=posts"}>
-                <Dropdown.Item>Posts</Dropdown.Item>
-              </Link>
-            )}
-            {currentUser.isAdmin && (
               <Link to={"/create-post"}>
                 <Dropdown.Item>Create Post</Dropdown.Item>
               </Link>
