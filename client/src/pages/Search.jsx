@@ -2,7 +2,6 @@ import { Button, Select, Spinner, TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import PostCard from "../components/PostCard";
-import { set } from "mongoose";
 
 const Search = () => {
   const location = useLocation();
