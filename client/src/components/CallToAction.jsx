@@ -9,18 +9,18 @@ const CallToAction = () => {
         <p className="text-gray-500 mt-1 mb-5">
           Checkout this resources with 100 React.JS projects
         </p>
-        <Button
-          gradientDuoTone="purpleToPink"
-          className="rounded-tl-xl rounded-bl-none"
+        <a
+          href="https://github.com/zippostorm"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <a
-            href="https://github.com/zippostorm"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Button
+            gradientDuoTone="purpleToPink"
+            className="rounded-tl-xl rounded-bl-none w-full"
           >
             Learn More
-          </a>
-        </Button>
+          </Button>
+        </a>
       </div>
       <div className="p-7 flex-1">
         <img src="https://cloud.appwrite.io/v1/storage/buckets/6751f8f50016d01eb3ad/files/6758246d001cf0ba7bd7/view?project=6751f02300346c4aaccb&project=6751f02300346c4aaccb&mode=admin" />
