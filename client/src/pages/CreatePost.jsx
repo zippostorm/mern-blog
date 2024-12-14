@@ -31,7 +31,6 @@ const CreatePost = () => {
 
   useEffect(() => {
     if (imageFileForma) {
-      console.log(imageFileForma);
       uploadImageFileForma();
     }
   }, [imageFileForma]);
