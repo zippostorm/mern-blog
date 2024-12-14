@@ -51,7 +51,10 @@ const CreatePost = () => {
         "POST",
         `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files`
       );
-      xhr.setRequestHeader("x-appwrite-project", projectId); // Замените на ID вашего проекта
+      xhr.setRequestHeader(
+        "https://mern-blog-production-afc3.up.railway.app",
+        projectId
+      ); // Замените на ID вашего проекта
 
       xhr.upload.onprogress = (event) => {
         setImageFileFormaUploading(true);
@@ -139,7 +142,10 @@ const CreatePost = () => {
           "POST",
           `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files`
         );
-        xhr.setRequestHeader("x-appwrite-project", projectId); // Замените на ID вашего проекта
+        xhr.setRequestHeader(
+          "https://mern-blog-production-afc3.up.railway.app",
+          projectId
+        ); // Замените на ID вашего проекта
 
         xhr.upload.onprogress = (event) => {
           setImageFileUploading(true);
